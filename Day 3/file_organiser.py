@@ -32,9 +32,7 @@ CATEGORIES = {
 
 
 def get_category(extension: str) -> str:
-    """
-    Determine category based on file extension.
-    """
+
     extension = extension.lower()
 
     for category, extensions in CATEGORIES.items():
@@ -45,10 +43,6 @@ def get_category(extension: str) -> str:
 
 
 def organise_folder(folder_path: str) -> dict:
-    """
-    Scan folder, move files into category folders,
-    and return summary dictionary.
-    """
 
     folder = Path(folder_path)
 
@@ -59,7 +53,7 @@ def organise_folder(folder_path: str) -> dict:
     summary = {category: 0 for category in CATEGORIES}
 
     print(f"\nOrganising: {folder_path}")
-    print("-" * 35)
+    print("----------------------------------------------------")
 
     for item in folder.iterdir():
 
@@ -77,20 +71,17 @@ def organise_folder(folder_path: str) -> dict:
 
         summary[category] += 1
 
-        print(f"Moved {item.name:<15} -> {category}/")
+        print(f"Moved {item.name} -> {category}/")
 
     return summary
 
 
 def print_report(summary: dict) -> None:
-    """
-    Print formatted report.
-    """
-
+    
     if not summary:
         return
 
-    print("-" * 35)
+    print("----------------------------------------------------")
     print("Summary:")
 
     total = 0
