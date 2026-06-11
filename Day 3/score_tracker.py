@@ -78,7 +78,7 @@ def game_session(player_name: str):
         print("Global total  :", total_score)
         print("High score    :", high_score)
 
-        # Built-in scope examples
+        # Built-in scope 
         print("Questions answered:", abs(streak))
         print("Type of score:", type(session_score).__name__)
 
