@@ -144,3 +144,18 @@ class Playlist:
 
             temp = temp.next
             count += 1
+
+
+p = Playlist()
+
+p.add_song("Kesariya", "Arijit", 262)
+p.add_song("Raataan", "Jubin", 218)
+p.add_song("Tum Hi Ho", "Arijit", 261)
+p.add_song("Believer", "Imagine Dragons", 204)
+
+p.next_track()
+p.next_track()
+
+p.remove_current()
+
+p.show_queue()
