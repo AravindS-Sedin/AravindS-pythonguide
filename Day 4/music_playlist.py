@@ -146,16 +146,16 @@ class Playlist:
             count += 1
 
 
-p = Playlist()
+playlist = Playlist()
 
-p.add_song("Kesariya", "Arijit", 262)
-p.add_song("Raataan", "Jubin", 218)
-p.add_song("Tum Hi Ho", "Arijit", 261)
-p.add_song("Believer", "Imagine Dragons", 204)
+playlist.add_song("Kesariya", "Arijit", 262)
+playlist.add_song("Raataan", "Jubin", 218)
+playlist.add_song("Tum Hi Ho", "Arijit", 261)
+playlist.add_song("Believer", "Imagine Dragons", 204)
 
-p.next_track()
-p.next_track()
+playlist.next_track()
+playlist.next_track()
 
-p.remove_current()
+playlist.remove_current()
 
-p.show_queue()
+playlist.show_queue()
