@@ -146,16 +146,20 @@ class Playlist:
             count += 1
 
 
-playlist = Playlist()
 
-playlist.add_song("Kesariya", "Arijit", 262)
-playlist.add_song("Raataan", "Jubin", 218)
-playlist.add_song("Tum Hi Ho", "Arijit", 261)
-playlist.add_song("Believer", "Imagine Dragons", 204)
+def main():
+    playlist = Playlist()
 
-playlist.next_track()
-playlist.next_track()
+    playlist.add_song("Kesariya", "Arijit", 262)
+    playlist.add_song("Raataan", "Jubin", 218)
+    playlist.add_song("Tum Hi Ho", "Arijit", 261)
+    playlist.add_song("Believer", "Imagine Dragons", 204)
 
-playlist.remove_current()
+    playlist.next_track()
+    playlist.next_track()
 
-playlist.show_queue()
+    playlist.remove_current()
+
+    playlist.show_queue()
+
+main()

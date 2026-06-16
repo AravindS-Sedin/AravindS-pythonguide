@@ -90,19 +90,23 @@ class Browser:
                 results.append(url)
 
         return results
-    
 
-browser = Browser()
+  
+def main():
+    browser = Browser()
 
-browser.visit("google.com")
-browser.visit("youtube.com")
-browser.visit("github.com")
+    browser.visit("google.com")
+    browser.visit("youtube.com")
+    browser.visit("github.com")
 
-browser.back()
-browser.back()
+    browser.back()
+    browser.back()
 
-browser.forward()
+    browser.forward()
 
-browser.visit("stackoverflow.com")
+    browser.visit("stackoverflow.com")
 
-browser.show_history()
+    browser.show_history()
+
+
+main()

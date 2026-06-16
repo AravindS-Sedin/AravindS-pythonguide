@@ -65,37 +65,40 @@ def most_volatile_week(prices):
     return start_day, start_day + 6, high_price, low_price, max_swing
 
 
-prices = [
-    450, 455, 460, 448, 470, 475, 480,
-    465, 458, 462, 470, 485, 490, 478,
-    465, 455, 440, 430, 420, 410, 425,
-    440, 460, 480, 377, 390, 410, 430,
-    450, 470
-]
+
+def main():
+
+    prices = [
+        450, 455, 460, 448, 470, 475, 480,
+        465, 458, 462, 470, 485, 490, 478,
+        465, 455, 440, 430, 420, 410, 425,
+        440, 460, 480, 377, 390, 410, 430,
+        450, 470
+    ]
+
+    buy_day, sell_day, profit = find_max_profit(prices)
+
+    print("\n---------- MAXIMUM PROFIT ----------")
+    print(f"Best Buy  : Day {buy_day} @ Rs.{prices[buy_day - 1]}")
+    print(f"Best Sell : Day {sell_day} @ Rs.{prices[sell_day - 1]}")
+    print(f"Max Profit: Rs.{profit}/share")
+
+    print("\n---------- 7-DAY MOVING AVERAGES ----------")
+
+    averages = moving_average(prices, 7)
+
+    for i, avg in enumerate(averages, start=1):
+        print(f"Window {i} (Day {i}-{i + 6}): {avg}")
+
+    start, end, high, low, swing = most_volatile_week(prices)
+
+    print("\n---------- MOST VOLATILE WEEK ----------")
+    print(
+        f"Week: Days {start}-{end} | "
+        f"High: {high} | "
+        f"Low: {low} | "
+        f"Swing: {swing}"
+    )
 
 
-buy_day, sell_day, profit = find_max_profit(prices)
-
-print("\n----------MAXIMUM PROFIT----------")
-print(f"Best Buy  : Day {buy_day} @ Rs.{prices[buy_day-1]}")
-print(f"Best Sell : Day {sell_day} @ Rs.{prices[sell_day-1]}")
-print(f"Max Profit: Rs.{profit}/share")
-
-
-print("\n----------7-DAY MOVING AVERAGES----------")
-
-averages = moving_average(prices, 7)
-
-for i, avg in enumerate(averages, start=1):
-    print(f"Window {i} (Day {i}-{i+6}): {avg}")
-
-
-start, end, high, low, swing = most_volatile_week(prices)
-
-print("\n----------MOST VOLATILE WEEK----------")
-print(
-    f"Week: Days {start}-{end} | "
-    f"High: {high} | "
-    f"Low: {low} | "
-    f"Swing: {swing}"
-)
+main()

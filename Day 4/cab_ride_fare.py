@@ -91,12 +91,15 @@ class FareCache:
 
         return f"Rs.{amount:,}"
     
+    
+def main():
+    farecache = FareCache()
 
-farecache = FareCache()
+    farecache.search("Pune->Mumbai")
+    farecache.search("Pune->Mumbai")
+    farecache.search("Pune->Nashik")
+    farecache.search("Pune->Mumbai")
 
-farecache.search("Pune->Mumbai")
-farecache.search("Pune->Mumbai")
-farecache.search("Pune->Nashik")
-farecache.search("Pune->Mumbai")
+    farecache.top_routes(3)
 
-farecache.top_routes(3)
+main()
