@@ -43,7 +43,7 @@ class FareCache:
             fare = self.cache[route]
 
             print(
-                f"HIT  — {self.format_fare(fare)} "
+                f"HIT  — Rs.{fare:,} "
                 f"(instant)"
             )
 
@@ -56,7 +56,7 @@ class FareCache:
         self.cache[route] = fare
 
         print(
-            f"MISS — {self.format_fare(fare)} "
+            f"MISS — Rs.{fare:,} "
             f"[saved to cache]"
         )
 
@@ -85,11 +85,6 @@ class FareCache:
         self.cache.clear()
 
         print("Cache cleared")
-
-    @staticmethod
-    def format_fare(amount):
-
-        return f"Rs.{amount:,}"
     
     
 def main():
@@ -98,7 +93,7 @@ def main():
     farecache.search("Pune->Mumbai")
     farecache.search("Pune->Mumbai")
     farecache.search("Pune->Nashik")
-    farecache.search("Pune->Mumbai")
+    farecache.search("Pune->Nagpur")
 
     farecache.top_routes(3)
 
