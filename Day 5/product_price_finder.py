@@ -12,109 +12,157 @@
 
 
 
-# iterative binary search to find closest price
-
-def find_closest_iterative(prices, target):
-    left = 0
-    right = len(prices) - 1
-
-    while left <= right:
-        mid = (left + right) // 2
-
-        if prices[mid] == target:
-            return prices[mid]
-
-        elif prices[mid] < target:
-            left = mid + 1
-
-        else:
-            right = mid - 1
-
-    # Target is larger than all elements
-    if left >= len(prices):
-        return prices[right]
-
-    # Target is smaller than all elements
-    if right < 0:
-        return prices[left]
-
-    # Compare neighbors
-    if abs(prices[left] - target) < abs(prices[right] - target):
-        return prices[left]
-
-    return prices[right]
+import timeit
 
 
+class ProductPriceFinder:
 
-# recursive binary search to find closest price
+    def __init__(self, prices):
+        self.prices = sorted(prices)
 
-def find_closest_recursive(prices, target, left, right):
+    # Linear Search (Exact Match)
+    def linear_search(self, target):
 
-    # Target not found
-    if left > right:
+        for price in self.prices:
+            if price == target:
+                return price
+
+        return -1
+
+    # Iterative Binary Search (Closest Price)
+    def find_closest_iterative(self, target):
+
+        left = 0
+        right = len(self.prices) - 1
+
+        while left <= right:
+
+            mid = (left + right) // 2
+
+            if self.prices[mid] == target:
+                return self.prices[mid]
+
+            elif self.prices[mid] < target:
+                left = mid + 1
+
+            else:
+                right = mid - 1
 
         # Target is larger than all elements
-        if left >= len(prices):
-            return prices[right]
+        if left >= len(self.prices):
+            return self.prices[right]
 
         # Target is smaller than all elements
         if right < 0:
-            return prices[left]
+            return self.prices[left]
 
-        # Compare the two neighbors
-        if abs(prices[left] - target) < abs(prices[right] - target):
-            return prices[left]
+        # Compare neighbors
+        if abs(self.prices[left] - target) < abs(self.prices[right] - target):
+            return self.prices[left]
 
-        return prices[right]
+        return self.prices[right]
 
-    mid = (left + right) // 2
+    # Recursive Binary Search (Closest Price)
+    def find_closest_recursive(self, target, left, right):
 
-    if prices[mid] == target:
-        return prices[mid]
+        # Target not found
+        if left > right:
 
-    elif prices[mid] < target:
-        return find_closest_recursive(
-            prices,
-            target,
-            mid + 1,
-            right
+            # Target is larger than all elements
+            if left >= len(self.prices):
+                return self.prices[right]
+
+            # Target is smaller than all elements
+            if right < 0:
+                return self.prices[left]
+
+            # Compare neighbors
+            if abs(self.prices[left] - target) < abs(self.prices[right] - target):
+                return self.prices[left]
+
+            return self.prices[right]
+
+        mid = (left + right) // 2
+
+        if self.prices[mid] == target:
+            return self.prices[mid]
+
+        elif self.prices[mid] < target:
+            return self.find_closest_recursive(
+                target,
+                mid + 1,
+                right
+            )
+
+        else:
+            return self.find_closest_recursive(
+                target,
+                left,
+                mid - 1
+            )
+
+    # Benchmark Comparison
+    def benchmark(self, target):
+
+        linear_time = timeit.timeit(
+            lambda: self.linear_search(target),
+            number=100
         )
 
-    else:
-        return find_closest_recursive(
-            prices,
-            target,
-            left,
-            mid - 1
+        iterative_time = timeit.timeit(
+            lambda: self.find_closest_iterative(target),
+            number=100
         )
 
-# Linear Search (for comparison)
+        recursive_time = timeit.timeit(
+            lambda: self.find_closest_recursive(
+                target,
+                0,
+                len(self.prices) - 1
+            ),
+            number=100
+        )
 
-def linear_search(prices, target):
-    for i, price in enumerate(prices):
-        if price == target:
-            return price
-    return -1
-
-# def main():
-#     prices = [100, 200, 300, 400]
-#     target = 250
-
-#     #iterative search
-#     print("Closest price:", find_closest_iterative(prices, target))
-
-#     #recursive search
-#     closest = find_closest_recursive(
-#         prices,
-#         target,
-#         0,
-#         len(prices) - 1
-#     )
-#     print("Closest price:", closest)
+        print("\n--- Benchmark Results ---")
+        print(f"Linear Search      : {linear_time:.6f} seconds")
+        print(f"Iterative Binary Search      : {iterative_time:.6f} seconds")
+        print(f"Recursive Binary Search      : {recursive_time:.6f} seconds")
 
 
-# if __name__ == "__main__":
-#     main()
+def main():
+
+    prices = [100, 200, 300, 400]
+    finder = ProductPriceFinder(prices)
+
+    target = 250
+
+    print("Price List:", prices)
+    print("Target:", target)
+
+    print(
+        "\nClosest Price (Iterative):",
+        finder.find_closest_iterative(target)
+    )
+
+    print(
+        "Closest Price (Recursive):",
+        finder.find_closest_recursive(
+            target,
+            0,
+            len(finder.prices) - 1
+        )
+    )
+
+    # Large dataset for benchmarking
+    large_dataset = ProductPriceFinder(
+        list(range(1, 1_000_001))
+    )
+
+    large_dataset.benchmark(999_999)
+
+
+if __name__ == "__main__":
+    main()
 
 
 # benchmark linear vs binary search
@@ -136,22 +184,41 @@ def linear_search(prices, target):
 # print(f"Binary Search : {binary_time:.6f}s")
 
 # benchmark linear vs binary search
-import timeit
+# import timeit
 
-prices = list(range(1, 1_000_001))
-target = 999_999
+# prices = list(range(1, 1_000_001))
+# target = 999_999
 
-# Measure Linear Search
-linear_time = timeit.timeit(
-    lambda: linear_search(prices, target),
-    number=100
-)
+# # Measure Linear Search
+# linear_time = timeit.timeit(
+#     lambda: linear_search(prices, target),
+#     number=100
+# )
 
-# Measure Binary Search
-binary_time = timeit.timeit(
-    lambda: find_closest_recursive(prices, target, 0, len(prices) - 1),
-    number=100
-)
+# # Measure Binary Search
+# binary_time = timeit.timeit(
+#     lambda: find_closest_recursive(prices, target, 0, len(prices) - 1),
+#     number=100
+# )
 
-print(f"Linear Search (100 runs): {linear_time:.6f} seconds")
-print(f"Binary Search (100 runs): {binary_time:.6f} seconds")
+# print(f"Linear Search (100 runs): {linear_time:.6f} seconds")
+# print(f"Binary Search (100 runs): {binary_time:.6f} seconds")
+
+
+# benchmark linear vs binary search
+# import time
+# prices = list(range(1, 1_000_001))
+# target = 999_999
+
+# # Linear Search
+# start = time.perf_counter()
+# linear_search(prices, target)
+# linear_time = time.perf_counter() - start
+
+# # Binary Search
+# start = time.perf_counter()
+# find_closest_recursive(prices, target, 0, len(prices) - 1)
+# binary_time = time.perf_counter() - start
+
+# print(f"Linear Search : {linear_time:.6f}s")
+# print(f"Binary Search : {binary_time:.6f}s")
