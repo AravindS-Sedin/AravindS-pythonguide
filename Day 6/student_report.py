@@ -58,16 +58,18 @@ class Student:
 
         pct = self.percentage
 
-        if pct >= 90:
-            return "A+"
-        elif pct >= 80:
-            return "A"
-        elif pct >= 70:
-            return "B"
-        elif pct >= 60:
-            return "C"
-        elif pct >= 50:
-            return "D"
+        grades = {
+            90: "A+",
+            80: "A",
+            70: "B",
+            60: "C",
+            50: "D"
+        }
+
+        for cutoff, grade in grades.items():
+            if pct >= cutoff:
+             return grade
+
         return "F"
 
     def display_report(self):
@@ -105,7 +107,7 @@ def main():
     s2.add_marks("Maths", 80)
     s2.add_marks("Science", 75)
     s2.add_marks("English", 82)
-    
+
     s2.display_report()
 
     print()
