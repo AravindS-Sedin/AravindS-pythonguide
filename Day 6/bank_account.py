@@ -104,8 +104,8 @@ class BankAccount:
 
 
 def main():
-    acc1 = BankAccount("Rahul", "HDFC001", 5000)
-    acc2 = BankAccount("Priya", "SBI001", 3000)
+    acc1 = BankAccount("Aravind", "HDFC001", 5000)
+    acc2 = BankAccount("Arjun", "SBI001", 3000)
 
     acc1.deposit(2000)
     acc1.withdraw(1500)

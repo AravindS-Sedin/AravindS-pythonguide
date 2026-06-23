@@ -16,9 +16,7 @@ class Vehicle:
         self.vehicle_no = vehicle_no
 
     def fare(self, distance):
-        raise NotImplementedError(
-            "Child class must implement fare()"
-        )
+        return 0
 
     def trip_summary(self, distance):
         total_fare = self.fare(distance)
