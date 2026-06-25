@@ -26,55 +26,66 @@ import asyncio
 import time
 
 
-async def fetch(source: str, delay: float) -> dict:
-    
-    print(f"[START] Fetching from {source}")
+class NewsFetcher:
 
-    await asyncio.sleep(delay)
+    async def fetch(self, source: str, delay: float) -> dict:
+        """
+        Simulate fetching news from a source.
+        """
 
-    print(f"[DONE ] {source} fetched in {delay:.1f}s")
+        print(f"[START] Fetching from {source}")
 
-    return {
-        "source": source,
-        "headlines": [
-            f"{source} story 1",
-            f"{source} story 2"
+        await asyncio.sleep(delay)
+
+        print(f"[DONE ] {source} fetched in {delay:.1f}s")
+
+        return {
+            "source": source,
+            "headlines": [
+                f"{source} story 1",
+                f"{source} story 2"
+            ]
+        }
+
+    async def fetch_news(self):
+
+        sources = [
+            ("BBC", 1.5),
+            ("Times", 2.0),
+            ("Reuters", 1.2)
         ]
-    }
+
+        sequential_time = sum(delay for _, delay in sources)
+
+        start = time.perf_counter()
+
+        results = await asyncio.gather(
+            self.fetch("BBC", 1.5),
+            self.fetch("Times", 2.0),
+            self.fetch("Reuters", 1.2)
+        )
+
+        end = time.perf_counter()
+
+        print("\nNews Feed")
+        print("-" * 40)
+
+        for news in results:
+            print(f"\nSource: {news['source']}")
+
+            for headline in news["headlines"]:
+                print(f"  • {headline}")
+
+        print("\nPerformance")
+        print("-" * 40)
+        print(f"Wall Clock Time     : {end - start:.2f}s")
+        print(f"Sequential Estimate : {sequential_time:.2f}s")
 
 
 async def main():
 
-    sources = [
-        ("BBC", 1.5),
-        ("Times", 2.0),
-        ("Reuters", 1.2)
-    ]
-
-    sequential_time = sum(delay for _, delay in sources)
-
-    start = time.perf_counter()
-
-    results = await asyncio.gather(
-        fetch("BBC", 1.5),
-        fetch("Times", 2.0),
-        fetch("Reuters", 1.2)
-    )
-
-    end = time.perf_counter()
-
-    print("\nNews Feed")
-    print("-" * 40)
-
-    for news in results:
-        print(f"\nSource: {news['source']}")
-        for headline in news["headlines"]:
-            print(f"  • {headline}")
-
-    print("\nPerformance")
-    print("-" * 40)
-    print(f"Wall Clock Time     : {end - start:.2f}s")
-    print(f"Sequential Estimate : {sequential_time:.2f}s")
+    news_fetcher = NewsFetcher()
+    await news_fetcher.fetch_news()
 
 
 if __name__ == "__main__":

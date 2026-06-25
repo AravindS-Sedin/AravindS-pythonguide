@@ -29,74 +29,87 @@ import multiprocessing
 import time
 
 
-def apply_filter(image_name):
-    
-    result = sum(i ** 2 for i in range(10_000_000))
+class ImageProcessor:
 
-    process_name = multiprocessing.current_process().name
+    def __init__(self):
 
-    return (
-        f"Processed: {image_name:<15} "
-        f"Checksum: {result % 9999:<5} "
-        f"Process: {process_name}"
-    )
+        self.images = [
+            f"photo_{i:03d}.jpg"
+            for i in range(1, 13)
+        ]
 
+    @staticmethod
+    def apply_filter(image_name):
+        
+        result = sum(i ** 2 for i in range(10_000_000))
 
-def single_process(images):
+        process_name = multiprocessing.current_process().name
 
-    start = time.perf_counter()
+        return (
+            f"Processed: {image_name} "
+            f"Checksum: {result % 9999} "
+            f"Process: {process_name}"
+        )
 
-    results = [apply_filter(img) for img in images]
+    def single_process(self):
 
-    end = time.perf_counter()
+        start = time.perf_counter()
 
-    return results, end - start
+        results = [
+            ImageProcessor.apply_filter(image)
+            for image in self.images
+        ]
 
+        end = time.perf_counter()
 
-def multi_process(images):
+        return results, end - start
 
-    start = time.perf_counter()
+    def multi_process(self):
 
-    with multiprocessing.Pool(
-        processes=multiprocessing.cpu_count()
-    ) as pool:
+        start = time.perf_counter()
 
-        results = pool.map(apply_filter, images)
+        with multiprocessing.Pool(
+            processes=multiprocessing.cpu_count()
+        ) as pool:
 
-    end = time.perf_counter()
+            results = pool.map(
+                ImageProcessor.apply_filter,
+                self.images
+            )
 
-    return results, end - start
+        end = time.perf_counter()
+
+        return results, end - start
+
+    def benchmark(self):
+
+        print(f"CPU Cores Available: {multiprocessing.cpu_count()}\n")
+
+        print("Running Single Process Benchmark...")
+        single_results, single_time = self.single_process()
+
+        print("\nRunning Multi-Process Benchmark...")
+        multi_results, multi_time = self.multi_process()
+
+        speedup = single_time / multi_time
+
+        print("\nSample Results")
+        print("-" * 60)
+
+        for result in multi_results[:5]:
+            print(result)
+
+        print("\nPerformance Comparison")
+        print("-" * 60)
+        print(f"Single Process Time : {single_time:.2f}s")
+        print(f"Multi Process Time  : {multi_time:.2f}s")
+        print(f"Speedup             : {speedup:.2f}x")
 
 
 def main():
 
-    images = [
-        f"photo_{i:03d}.jpg"
-        for i in range(1, 13)
-    ]
-
-    print(f"CPU Cores Available: {multiprocessing.cpu_count()}\n")
-
-    print("Running Single Process Benchmark...")
-    single_results, single_time = single_process(images)
-
-    print("\nRunning Multi-Process Benchmark...")
-    multi_results, multi_time = multi_process(images)
-
-    speedup = single_time / multi_time
-
-    print("\nSample Results")
-    print("-" * 60)
-
-    for result in multi_results[:5]:
-        print(result)
-
-    print("\nPerformance Comparison")
-    print("-" * 60)
-
-    print(f"Single Process Time : {single_time:.2f}s")
-    print(f"Multi Process Time  : {multi_time:.2f}s")
-    print(f"Speedup             : {speedup:.2f}x")
+    processor = ImageProcessor()
+    processor.benchmark()
 
 
 if __name__ == "__main__":

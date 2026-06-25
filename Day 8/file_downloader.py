@@ -24,67 +24,78 @@ import random
 import time
 
 
-completed = []
-delays = []
-lock = threading.Lock()
+class FileDownloader:
 
+    def __init__(self):
+        self.completed = []
+        self.delays = []
+        self.lock = threading.Lock()
 
-def download_file(filename, size_mb):
+    def download_file(self, filename, size_mb):
 
-    delay = random.uniform(1, 4)
+        delay = random.uniform(1, 4)
 
-    with lock:
-        delays.append(delay)
+        with self.lock:
+            self.delays.append(delay)
 
-    print(
-        f"[START] {filename} "
-        f"on {threading.current_thread().name}"
-    )
+        print(
+            f"[START] {filename} "
+            f"on {threading.current_thread().name}"
+        )
 
-    time.sleep(delay)
+        time.sleep(delay)
 
-    with lock:
-        completed.append(filename)
+        with self.lock:
+            self.completed.append(filename)
 
-    print(f"[DONE ] {filename} in {delay:.2f}s")
+        print(f"[DONE ] {filename} in {delay:.2f}s")
+
+    def download_files(self):
+
+        files = [
+            ("report.pdf", 5),
+            ("video.mp4", 120),
+            ("image.jpg", 2),
+            ("data.csv", 15),
+        ]
+
+        start = time.perf_counter()
+
+        with ThreadPoolExecutor(max_workers=3) as executor:
+
+            futures = []
+
+            for filename, size in files:
+                future = executor.submit(
+                    self.download_file,
+                    filename,
+                    size
+                )
+                futures.append(future)
+
+            for future in futures:
+                future.result()
+
+        end = time.perf_counter()
+
+        wall_clock = end - start
+        sequential_estimate = sum(self.delays)
+
+        print("\nCompleted Files:")
+        print(self.completed)
+
+        print(f"\nWall Clock Time     : {wall_clock:.2f}s")
+        print(f"Sequential Estimate : {sequential_estimate:.2f}s")
 
 
 def main():
 
-    files = [
-        ("report.pdf", 5),
-        ("video.mp4", 120),
-        ("image.jpg", 2),
-        ("data.csv", 15),
-    ]
-
-    start = time.perf_counter()
-
-    with ThreadPoolExecutor(max_workers=3) as executor:
-
-        futures = []
-
-        for filename, size in files:
-            futures.append(
-                executor.submit(download_file, filename, size)
-            )
-
-        for future in futures:
-            future.result()
-
-    end = time.perf_counter()
-
-    wall_clock = end - start
-    sequential_estimate = sum(delays)
-
-    print("\nCompleted:", completed)
-    print(f"Wall Clock Time     : {wall_clock:.2f}s")
-    print(f"Sequential Estimate : {sequential_estimate:.2f}s")
+    downloader = FileDownloader()
+    downloader.download_files()
 
 
 if __name__ == "__main__":
     main()
-
 
 
 
