@@ -136,9 +136,9 @@ class Order(BaseModel):
             subtotal += item_total
 
             print(
-                f"{item.name:<15}"
-                f"{item.quantity:>2} x "
-                f"Rs.{item.price:<6.2f} "
+                f"{item.name:}"
+                f"{item.quantity:} x "
+                f"Rs.{item.price:.2f} "
                 f"= Rs.{item_total:.2f}"
             )
 
