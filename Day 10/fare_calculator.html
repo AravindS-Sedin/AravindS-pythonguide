@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Python: module fare_calculator</title>
+</head><body>
+
+<table class="heading">
+<tr class="heading-text decor">
+<td class="title">&nbsp;<br><strong class="title">fare_calculator</strong></td>
+<td class="extra"><a href=".">index</a><br><a href="file:c%3A%5Cusers%5Caravind%5Cdownloads%5Cpython%5Cday%2010%5Cfare_calculator.py">c:\users\aravind\downloads\python\day 10\fare_calculator.py</a></td></tr></table>
+    <p><span class="code">Cab&nbsp;Fare&nbsp;Calculator<br>
+&nbsp;<br>
+This&nbsp;module&nbsp;provides&nbsp;utility&nbsp;functions&nbsp;to&nbsp;calculate&nbsp;cab&nbsp;fares,<br>
+apply&nbsp;discounts,&nbsp;and&nbsp;generate&nbsp;trip&nbsp;summaries.<br>
+&nbsp;<br>
+The&nbsp;module&nbsp;demonstrates:<br>
+-&nbsp;Google-style&nbsp;docstrings<br>
+-&nbsp;Type&nbsp;hints<br>
+-&nbsp;help()<br>
+-&nbsp;doctest&nbsp;examples<br>
+-&nbsp;pydoc&nbsp;documentation</span></p>
+<p>
+<table class="section">
+<tr class="decor functions-decor heading-text">
+<td class="section-title" colspan=3>&nbsp;<br><strong class="bigsection">Functions</strong></td></tr>
+    
+<tr><td class="decor functions-decor"><span class="code">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></td><td>&nbsp;</td>
+<td class="singlecolumn"><dl><dt><a name="-apply_discount"><strong>apply_discount</strong></a>(fare: float, discount: float) -&gt; float</dt><dd><span class="code">Apply&nbsp;percentage&nbsp;discount&nbsp;to&nbsp;the&nbsp;fare.<br>
+&nbsp;<br>
+Args:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;fare&nbsp;(float):&nbsp;Original&nbsp;fare.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;discount&nbsp;(float):&nbsp;Discount&nbsp;percentage.<br>
+&nbsp;<br>
+Returns:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;float:&nbsp;Discounted&nbsp;fare.<br>
+&nbsp;<br>
+Raises:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;ValueError:&nbsp;If&nbsp;discount&nbsp;is&nbsp;not&nbsp;between&nbsp;0&nbsp;and&nbsp;100.<br>
+&nbsp;<br>
+Example:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;<a href="#-apply_discount">apply_discount</a>(200,&nbsp;10)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;180.0<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;<a href="#-apply_discount">apply_discount</a>(500,&nbsp;20)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;400.0</span></dd></dl>
+ <dl><dt><a name="-calculate_fare"><strong>calculate_fare</strong></a>(distance: float, vehicle: str) -&gt; float</dt><dd><span class="code">Calculate&nbsp;cab&nbsp;fare&nbsp;based&nbsp;on&nbsp;distance&nbsp;and&nbsp;vehicle&nbsp;type.<br>
+&nbsp;<br>
+Args:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;distance&nbsp;(float):&nbsp;Trip&nbsp;distance&nbsp;in&nbsp;kilometers.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;vehicle&nbsp;(str):&nbsp;Vehicle&nbsp;type&nbsp;("car",&nbsp;"bike",&nbsp;or&nbsp;"auto").<br>
+&nbsp;<br>
+Returns:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;float:&nbsp;Total&nbsp;fare&nbsp;in&nbsp;Indian&nbsp;Rupees.<br>
+&nbsp;<br>
+Raises:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;ValueError:&nbsp;If&nbsp;the&nbsp;distance&nbsp;is&nbsp;negative.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;ValueError:&nbsp;If&nbsp;the&nbsp;vehicle&nbsp;type&nbsp;is&nbsp;invalid.<br>
+&nbsp;<br>
+Example:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;<a href="#-calculate_fare">calculate_fare</a>(10,&nbsp;"car")<br>
+&nbsp;&nbsp;&nbsp;&nbsp;200.0<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;<a href="#-calculate_fare">calculate_fare</a>(5,&nbsp;"bike")<br>
+&nbsp;&nbsp;&nbsp;&nbsp;50.0</span></dd></dl>
+ <dl><dt><a name="-main"><strong>main</strong></a>()</dt><dd><span class="code">Demonstrate&nbsp;the&nbsp;fare&nbsp;calculator.<br>
+&nbsp;<br>
+Returns:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;None<br>
+&nbsp;<br>
+Example:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;<a href="#-main">main</a>()&nbsp;&nbsp;#&nbsp;doctest:&nbsp;+SKIP</span></dd></dl>
+ <dl><dt><a name="-trip_summary"><strong>trip_summary</strong></a>(distance: float, vehicle: str, discount: float = 0) -&gt; str</dt><dd><span class="code">Generate&nbsp;a&nbsp;formatted&nbsp;trip&nbsp;summary.<br>
+&nbsp;<br>
+Args:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;distance&nbsp;(float):&nbsp;Distance&nbsp;traveled.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;vehicle&nbsp;(str):&nbsp;Vehicle&nbsp;type.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;discount&nbsp;(float):&nbsp;Discount&nbsp;percentage.<br>
+&nbsp;<br>
+Returns:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;str:&nbsp;Multi-line&nbsp;trip&nbsp;summary.<br>
+&nbsp;<br>
+Raises:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;ValueError:&nbsp;If&nbsp;any&nbsp;invalid&nbsp;value&nbsp;is&nbsp;supplied.<br>
+&nbsp;<br>
+Example:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;print(<a href="#-trip_summary">trip_summary</a>(10,&nbsp;"car",&nbsp;10))<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Vehicle&nbsp;:&nbsp;car<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Distance:&nbsp;10&nbsp;km<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Fare&nbsp;&nbsp;&nbsp;&nbsp;:&nbsp;Rs.180.0</span></dd></dl>
+</td></tr></table>
+</body></html>
