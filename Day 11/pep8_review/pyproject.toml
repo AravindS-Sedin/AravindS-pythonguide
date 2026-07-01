@@ -1,0 +1,12 @@
+[tool.ruff]
+line-length = 88
+
+[tool.ruff.lint]
+select = ["ALL"]
+
+ignore = [
+    "D203",
+    "D213",
+    "COM812",
+    "T201",
+]
